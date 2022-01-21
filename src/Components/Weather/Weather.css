@@ -1,0 +1,66 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  font-family: "Varela Round", sans-serif;
+
+  /* padding: 220px 0px 280px; */
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+.main {
+  width: 30%;
+  background-image: url("../../Images/SmallBackground.jpg");
+
+  /* width: 100%; */
+
+  /* background-color: black; */
+  margin: 50px auto;
+  padding: 30px 10px;
+  text-align: center;
+  border-radius: 10px;
+  color: whitesmoke;
+}
+input {
+  width: 90%;
+  margin-top: 30px;
+  padding: 13px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-size: 1em;
+}
+.info {
+  margin-top: 50px;
+}
+.info h2 {
+  margin-top: 30px;
+  color: white;
+  font-size: 2.5em;
+}
+.info h1 {
+  margin-top: 30px;
+  color: white;
+}
+.tempreature p {
+  margin-top: 30px;
+}
+
+.subdiv {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 1px solid;
+  margin: 30px 15px;
+  font-weight: 700;
+}
+.subdiv p {
+  position: relative;
+  top: 25px;
+  font-weight: 700;
+}
+.bold {
+  font-weight: 700;
+}
