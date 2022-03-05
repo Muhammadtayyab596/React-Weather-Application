@@ -24,11 +24,9 @@ const Weather = () => {
   }, [search]);
 
   return (
-    <>
-      <div className="main">
-        <h1>Weather App</h1>
-        <div className="inputData">
-          <input
+    <div className="weatherContainer" >
+      <div className="inputCotainer" >
+        <input
             type="search"
             className="inputField"
             placeholder="Enter a City name"
