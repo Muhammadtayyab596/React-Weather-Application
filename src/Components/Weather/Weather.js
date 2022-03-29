@@ -2,88 +2,133 @@ import axios from "axios";
 import "./Weather.css";
 import { useState, useEffect } from "react";
 
+
+
 const Weather = () => {
-  const [city, setCity] = useState(null);
-  const [search, setSearch] = useState("karachi");
+
+  const [city, setCity] = useState("");
+  const [search, setSearch] = useState("lahore");
+
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+
+
+  var current = new Date();
+  var date = current.getDate();
+  var monthName = months[current.getMonth()]
+  var dayName = days[current.getDay()]
+  var year = current.getFullYear();
+  var currentTime = current.toLocaleTimeString();
+
+  var iconurl = "http://openweathermap.org/img/w/";
+
+
+  const searchBtn = () => {
+
+    axios(`https://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&appid=e66647ae648e6ad4ad5398eab811dbe3`)
+      .then((data) => {
+        console.log('data:', data)
+        setCity(data)
+        console.log(city);
+      })
+      .catch((e) => {
+        alert("Invalid City Name", e)
+      })
+
+
+
+
+  }
+
 
   useEffect(() => {
-    const fetchApi = async () => {
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&appid=c4307c6a631f28236d48d91a20a41807`;
-      const response = await fetch(url);
-      const resj = await response.json();
-      console.log(resj);
-      // .then((data) => {
-      //     console.log(data);
-      // })
-      // .catch((err) => {
-      //     console.error(err);
-      // });
-      setCity(resj.main);
-    };
-    fetchApi();
-  }, [search]);
+    searchBtn();
+
+  }, []);
+
+
+
 
   return (
     <div className="weatherContainer" >
+
+      {/* inputCotainer */}
+
       <div className="inputCotainer" >
         <input
-            type="search"
-            className="inputField"
-            placeholder="Enter a City name"
-            value={search}
-            onChange={(event) => {
-              setSearch(event.target.value);
-            }}
-          />
-        </div>
-        {!city ? (
-          <h2> No Data Found</h2>
-        ) : (
-          <div>
-            <div className="info">
-              <h2 className="location">
-                <i className="fas fa-map-marker-alt"></i>
-                {search}
-              </h2>
-              <h1 className="temp">{city.temp}°C</h1>
+          className="inputField"
+          placeholder="Search"
+          type="search"
+          onChange={e => setSearch(e.target.value)}
+        />
+        <i onClick={searchBtn} class="fas fa-search"></i>
+      </div>
 
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  marginTop: "50px",
-                }}
-              >
-                <div>
-                  <div className="subdiv">
-                    <p>{city.temp_min}°C </p>
-                  </div>
-                  <p className="bold">Min</p>
-                </div>
-                <div>
-                  <div className="subdiv">
-                    <p>{city.temp_max}°C</p>
-                  </div>
-                  <p className="bold">Max</p>
-                </div>
-                <div>
-                  <div className="subdiv">
-                    <p>{city.humidity}%</p>
-                  </div>
-                  <p className="bold">humidity</p>
-                </div>
-                <div>
-                  <div className="subdiv">
-                    <p>{city.feels_like}°C</p>
-                  </div>
-                  <p className="bold">feels_like</p>
-                </div>
-              </div>
+
+      {!city ? <h1>Loading</h1> :
+
+        <div>
+
+
+
+          {/*tempContainer*/}
+
+          <div className="tempContainer" >
+            <h1>{Math.round(city.data.main.temp)}°C</h1>
+            <h2>{city.data.weather[0].main}</h2>
+          </div>
+
+          {/* Date and Day */}
+
+          <div className="DatenDayContainer" >
+            <span>{dayName} |</span>
+            <span> {monthName} {date} |</span>
+            <span> {currentTime}</span>
+          </div>
+
+          <div className="imageContainer" >
+            <img src={iconurl + city.data.weather[0].icon + ".png"} width="100px" />
+          </div>
+
+
+          {/* Location */}
+
+          <div className=" Location" >
+            <p>{city.data.name}</p>
+          </div>
+
+
+          {/* feelLikeContainer */}
+
+
+          <div className="feelLikeContainer" >
+
+            <div >
+              <div className="circle" ><p className="circleNumber" >{Math.round(city.data.main.temp_min)}°C</p></div>
+              <div className="circleText" >Min</div>
+            </div>
+
+            <div >
+              <div className="circle" ><p className="circleNumber" >{Math.round(city.data.main.temp_max)}°C</p></div>
+              <div className="circleText" >Max</div>
+            </div>
+
+            <div >
+              <div className="circle" ><p className="circleNumber" >{city.data.main.humidity} %</p></div>
+              <div className="circleText" >humidity</div>
+            </div>
+
+            <div >
+              <div className="circle" ><p className="circleNumber" >{Math.round(city.data.main.feels_like)}°C</p></div>
+              <div className="circleText" >Feel like</div>
             </div>
           </div>
-        )}
-      </div>
-    </>
+          
+
+        </div>
+      }
+    </div>
   );
 };
 

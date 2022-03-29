@@ -1,10 +1,10 @@
 body {
-  background-image: url("./Images/Background.jpg");
+  background-image: url("./Images/39-398145_facebook-cover-photos-heaven.jpg");
   width: 100%;
   min-height: 100vh;
   background-position: center;
   background-size: cover;
-  /* padding: 220px 0px 280px; */
   background-repeat: no-repeat;
   background-attachment: fixed;
+  
 }
